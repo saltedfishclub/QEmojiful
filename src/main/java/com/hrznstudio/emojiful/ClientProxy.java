@@ -177,13 +177,13 @@ public class ClientProxy {
         CATEGORIES.addAll(Arrays.asList("Smileys & Emotion", "Animals & Nature", "Food & Drink", "Activities", "Travel & Places", "Objects", "Symbols", "Flags").stream().map(s -> new EmojiCategory(s, false)).collect(Collectors.toList()));
         if (EmojifulConfig.getInstance().loadCustom.get())loadCustomEmojis();
         //loadGithubEmojis();
-        if (EmojifulConfig.getInstance().loadTwemoji.get())loadTwemojis();
+        //if (EmojifulConfig.getInstance().loadTwemoji.get())loadTwemojis();
         if (EmojifulConfig.getInstance().profanityFilter.get()) ProfanityFilter.loadConfigs();
     }
 
     private void loadCustomEmojis(){
         try {
-            YamlReader reader = new YamlReader(new StringReader(Emojiful.readStringFromURL("https://raw.githubusercontent.com/InnovativeOnlineIndustries/emojiful-assets/master/Categories.yml")));
+            YamlReader reader = new YamlReader(new StringReader(Emojiful.readStringFromURL("https://sfclub.cc/qemoji/Categories.yml")));
             ArrayList<String> categories = (ArrayList<String>) reader.read();
             for (String category : categories) {
                 CATEGORIES.add(0, new EmojiCategory(category.replace(".yml", ""), false));
@@ -192,56 +192,6 @@ public class ClientProxy {
                 Emojiful.EMOJI_MAP.put(category.replace(".yml", ""), emojis);
             }
         } catch (Exception e) {
-            Emojiful.error = true;
-            Emojiful.LOGGER.catching(e);
-        }
-    }
-
-    private void loadApiEmojis(){
-        for (JsonElement categories : Emojiful.readJsonFromUrl("https://www.emojidex.com/api/v1/categories").getAsJsonObject().getAsJsonArray("categories")) {
-            Emojiful.EMOJI_MAP.put(categories.getAsJsonObject().get("code").getAsString(), new ArrayList<>());
-        }
-    }
-
-    public void loadGithubEmojis(){
-        Emojiful.EMOJI_MAP.put("Github", new ArrayList<>());
-        for (Map.Entry<String, JsonElement> entry : Emojiful.readJsonFromUrl("https://api.github.com/emojis").getAsJsonObject().entrySet()) {
-            EmojiFromGithub emoji = new EmojiFromGithub();
-            emoji.name = entry.getKey();
-            emoji.strings = new ArrayList<>();
-            emoji.strings.add(":" + entry.getKey() + ":");
-            emoji.location = entry.getKey();
-            emoji.url = entry.getValue().getAsString();
-            Emojiful.EMOJI_MAP.get("Github").add(emoji);
-            Emojiful.EMOJI_LIST.add(emoji);
-        }
-    }
-
-    public void loadTwemojis(){
-        try{
-            for (JsonElement element : Emojiful.readJsonFromUrl("https://raw.githubusercontent.com/iamcal/emoji-data/master/emoji.json").getAsJsonArray()){
-                if (element.getAsJsonObject().get("has_img_twitter").getAsBoolean()){
-                    EmojiFromTwitmoji emoji = new EmojiFromTwitmoji();
-                    emoji.name = element.getAsJsonObject().get("short_name").getAsString();
-                    emoji.location = element.getAsJsonObject().get("image").getAsString();
-                    emoji.sort =  element.getAsJsonObject().get("sort_order").getAsInt();
-                    element.getAsJsonObject().get("short_names").getAsJsonArray().forEach(jsonElement -> emoji.strings.add(":" + jsonElement.getAsString() + ":"));
-                    if (emoji.strings.contains(":face_with_symbols_on_mouth:")){
-                        emoji.strings.add(":swear:");
-                    }
-                    if (!element.getAsJsonObject().get("texts").isJsonNull()){
-                        element.getAsJsonObject().get("texts").getAsJsonArray().forEach(jsonElement -> emoji.texts.add(jsonElement.getAsString()));
-                    }
-                    Emojiful.EMOJI_MAP.computeIfAbsent(element.getAsJsonObject().get("category").getAsString(), s -> new ArrayList<>()).add(emoji);
-                    Emojiful.EMOJI_LIST.add(emoji);
-                    if (emoji.texts.size() > 0){
-                        ClientProxy.EMOJI_WITH_TEXTS.add(emoji);
-                    }
-                }
-            }
-            ClientProxy.EMOJI_WITH_TEXTS.sort(Comparator.comparingInt(o -> o.sort));
-            Emojiful.EMOJI_MAP.values().forEach(emojis -> emojis.sort(Comparator.comparingInt(o -> o.sort)));
-        } catch (Exception e){
             Emojiful.error = true;
             Emojiful.LOGGER.catching(e);
         }

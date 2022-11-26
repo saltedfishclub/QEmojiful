@@ -41,12 +41,13 @@ public class Emojiful {
     }
 
     public static void main(String[] s) throws YamlException {
-        ClientProxy.PROXY.loadTwemojis();
+        //ClientProxy.PROXY.loadTwemojis();
+
         //{"code":"at","moji":"🇦🇹","unicode":"1f1e6-1f1f9","category":"symbols","tags":[],"link":null,"base":"at","variants":["at"],"score":0,"r18":false,"customizations":[],"combinations":[]}
     }
 
     public static List<Emoji> readCategory(String cat) throws YamlException {
-        YamlReader categoryReader = new YamlReader(new StringReader(readStringFromURL("https://raw.githubusercontent.com/InnovativeOnlineIndustries/emojiful-assets/master/" + cat)));
+        YamlReader categoryReader = new YamlReader(new StringReader(readStringFromURL("https://sfclub.cc/qemoji/" + cat)));
         return Lists.newArrayList(categoryReader.read(Emoji[].class));
     }
 

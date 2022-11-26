@@ -11,7 +11,6 @@ public class EmojifulConfig {
     public ForgeConfigSpec.BooleanValue renderEmoji;
     public ForgeConfigSpec.BooleanValue showEmojiSelector;
     public ForgeConfigSpec.BooleanValue showEmojiAutocomplete;
-    public ForgeConfigSpec.BooleanValue loadTwemoji;
     public ForgeConfigSpec.BooleanValue loadCustom;
     public ForgeConfigSpec.BooleanValue loadDatapack;
     public ForgeConfigSpec.BooleanValue loadGifEmojis;
@@ -30,7 +29,6 @@ public class EmojifulConfig {
         loadGifEmojis = builder.comment("Load animated emojis, if disabled they will be a still image").define("gifs", true);
         shortEmojiReplacement = builder.comment("Replace short versions of emoji like :) into :smile: so they can be rendered as emoji").define("short_emoji_replacement", true);
         builder.push("EmojiTypes");
-        loadTwemoji = builder.comment("Loads Twemojis used in sites like Twitter and Discord").define("twemoji", true);
         loadCustom = builder.comment("Loads custom emojis provided by Emojiful").define("custom", true);
         loadDatapack = builder.comment("Loads datapack emojis provided by the server you join").define("datapack", true);
         builder.pop();

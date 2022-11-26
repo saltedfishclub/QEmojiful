@@ -1,12 +1,9 @@
 package com.hrznstudio.emojiful;
 
-import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.YamlReader;
-import com.google.gson.JsonElement;
 import com.hrznstudio.emojiful.api.Emoji;
 import com.hrznstudio.emojiful.api.EmojiCategory;
 import com.hrznstudio.emojiful.api.EmojiFromGithub;
-import com.hrznstudio.emojiful.api.EmojiFromTwitmoji;
 import com.hrznstudio.emojiful.datapack.EmojiRecipe;
 import com.hrznstudio.emojiful.datapack.EmojiRecipeSerializer;
 import com.hrznstudio.emojiful.gui.*;
@@ -26,7 +23,6 @@ import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -169,16 +165,16 @@ public class ClientProxy {
                     CATEGORIES.add(0, new EmojiCategory(emojiRecipe.getCategory(), true));
                 }
             }
-            indexEmojis();
+            //indexEmojis();
         }
     }
 
     private void preInitEmojis() {
-        CATEGORIES.addAll(Arrays.asList("Smileys & Emotion", "Animals & Nature", "Food & Drink", "Activities", "Travel & Places", "Objects", "Symbols", "Flags").stream().map(s -> new EmojiCategory(s, false)).collect(Collectors.toList()));
+        //CATEGORIES.addAll(Arrays.asList("Smileys & Emotion", "Animals & Nature", "Food & Drink", "Activities", "Travel & Places", "Objects", "Symbols", "Flags").stream().map(s -> new EmojiCategory(s, false)).collect(Collectors.toList()));
         if (EmojifulConfig.getInstance().loadCustom.get())loadCustomEmojis();
         //loadGithubEmojis();
         //if (EmojifulConfig.getInstance().loadTwemoji.get())loadTwemojis();
-        if (EmojifulConfig.getInstance().profanityFilter.get()) ProfanityFilter.loadConfigs();
+        //if (EmojifulConfig.getInstance().profanityFilter.get()) ProfanityFilter.loadConfigs();
     }
 
     private void loadCustomEmojis(){

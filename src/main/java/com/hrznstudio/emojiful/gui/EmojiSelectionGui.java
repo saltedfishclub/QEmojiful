@@ -54,7 +54,6 @@ public class EmojiSelectionGui implements IDrawableGuiListener  {
         this.categoryPointer = 0;
         this.chatScreen = screen;
         this.openSelectionAreaEmoji = -1;
-        if (Emojiful.EMOJI_MAP.containsKey("Smileys & Emotion"))this.openSelectionAreaEmoji = new Random().nextInt(Emojiful.EMOJI_MAP.get("Smileys & Emotion").size());
         this.showingSelectionArea = false;
         int offset = 0;
         if (ModList.get().isLoaded("quark")) offset = -80;
@@ -71,7 +70,6 @@ public class EmojiSelectionGui implements IDrawableGuiListener  {
 
     @Override
     public void render(MatrixStack stack) {
-        if (this.openSelectionAreaEmoji != -1)Minecraft.getInstance().fontRenderer.drawString(stack, Emojiful.EMOJI_MAP.get("Smileys & Emotion").get(openSelectionAreaEmoji).strings.get(0), openSelectionArea.getX(), openSelectionArea.getY(), 0);
         if (this.showingSelectionArea){
             drawRectangle(stack, this.selectionArea);
             drawRectangle(stack, this.categorySelectionArea);
@@ -81,7 +79,7 @@ public class EmojiSelectionGui implements IDrawableGuiListener  {
             }
             int progressY = (int) ((( this.emojiInfoArea.getY() - this.categorySelectionArea.getY() - 5) / ((double)getLineAmount())) * (selectionPointer)) ;
             drawRectangle(stack, new Rectangle2d(this.selectionArea.getX() + this.selectionArea.getWidth() - 2, this.categorySelectionArea.getY() + progressY, 1,5), 0xff525252);
-            if (lastEmoji != null){
+            if (false){
                 Minecraft.getInstance().fontRenderer.drawString(stack, lastEmoji.strings.get(0), emojiInfoArea.getX() + 2, emojiInfoArea.getY() + 6, 0);
                 StringBuilder builder = new StringBuilder();
                 lastEmoji.strings.forEach(s -> builder.append(s).append(" "));
